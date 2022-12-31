@@ -39,7 +39,10 @@ app.get("/tv/:id/index.m3u8", async (req, res) => {
       // Set the cookie in the request headers for the subsequent call
       const config = {
         headers: {
-          Cookie: cookie
+          Cookie: cookie,
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+          Expires: '0',
         }
       };
 
