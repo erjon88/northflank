@@ -79,7 +79,7 @@ app.get('/stream/:hostName/hls/live/:streamId/:streamName/:playlistName', proxy(
   proxyReqPathResolver: function (req) {
     const { playlistName, streamId, streamName } = req.params;
     const { hdnts } = req.query;
-    return `/hls/live/${streamId}/${streamName}/${playlistName}?hdnts=${decodeURIComponent(hdnts)}`;
+    return `/hls/live/${streamId}/${streamName}/${playlistName}?hdnts=${decodeURIComponent(hdnts)}&rand=${Date.now()}`;
   },
   proxyReqOptDecorator: function(proxyReqOpts) {
     proxyReqOpts.headers['x-forwarded-for'] = '84.22.33.2'
@@ -93,7 +93,7 @@ app.get('/stream/:hostName/hls/live/:streamId/:streamName/:chunkId/*', proxy((re
 }, {
   proxyReqPathResolver: (req) => {
     const { streamId, streamName, chunkId, 0: rest } = req.params;
-    return `/hls/live/${streamId}/${streamName}/${chunkId}/${decodeURIComponent(rest)}`;
+    return `/hls/live/${streamId}/${streamName}/${chunkId}/${decodeURIComponent(rest)}?rand=${Date.now()}`;
   },
   proxyReqOptDecorator: function(proxyReqOpts) {
     proxyReqOpts.headers['x-forwarded-for'] = '84.22.33.2'
@@ -109,7 +109,7 @@ app.get('/stream/:hostName/hls/live/:streamId/:streamName/:chunkId/:tracks/ts/:s
   proxyReqPathResolver: (req) => {
     const {streamId, streamName, chunkId, tracks, segment, 0: rest } = req.params;
     console.log('fetching segment', segment);
-    return `/hls/live/${streamId}/${streamName}/${chunkId}/${tracks}/${decodeURIComponent(rest)}/ts/${decodeURIComponent(rest)}`;
+    return `/hls/live/${streamId}/${streamName}/${chunkId}/${tracks}/${decodeURIComponent(rest)}/ts/${decodeURIComponent(rest)}?rand=${Date.now()}`;
   },
   proxyReqOptDecorator: function(proxyReqOpts) {
     proxyReqOpts.headers['x-forwarded-for'] = '84.22.33.2'
@@ -124,7 +124,7 @@ app.get('/stream/:hostName/hls/live/:streamId/:streamName/:chunkId/:tracks/*', p
 }, {
   proxyReqPathResolver: (req) => {
     const { streamId, streamName, chunkId, tracks, 0: rest } = req.params;
-    return `/hls/live/${streamId}/${streamName}/${chunkId}/${tracks}/${decodeURIComponent(rest)}`;
+    return `/hls/live/${streamId}/${streamName}/${chunkId}/${tracks}/${decodeURIComponent(rest)}?rand=${Date.now()}`;
   },
   proxyReqOptDecorator: function(proxyReqOpts) {
     proxyReqOpts.headers['x-forwarded-for'] = '84.22.33.2'
