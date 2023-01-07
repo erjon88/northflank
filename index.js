@@ -3,7 +3,7 @@ const proxy = require('express-http-proxy');
 const express = require("express");
 const axios = require("axios");
 const url = require('url');
-const HOSTNAME = process.env.CYCLIC_APP_ID ? `${process.env.CYCLIC_APP_ID}.cyclic.app` : 'localhost:3010';
+const HOSTNAME = process.env.RENDER_EXTERNAL_HOSTNAME ? `${process.env.RENDER_EXTERNAL_HOSTNAME}` : 'localhost:3010';
 
 // Initialize express app
 const app = express();
@@ -56,7 +56,7 @@ app.get("/tv/:id/index.m3u8", async (req, res) => {
 
       // Replace the domain with 'localhost'
       urlObj.host = `${HOSTNAME}/stream/${urlObj.host}`;
-      urlObj.protocol = process.env.CYCLIC_APP_ID ? 'https' : 'http';
+      urlObj.protocol = process.env.RENDER_EXTERNAL_HOSTNAME ? 'https' : 'http';
 
       // Rebuild the URL string with the new domain
       const newUrl = url.format(urlObj);
